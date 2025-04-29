@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Experiment {
+  id                  String               @id @default(auto()) @map("_id") @db.ObjectId
+  name                String
+  systemPrompt        String
+  modelName           String
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  experimentRuns      ExperimentRun[]
+  experimentTestCases ExperimentTestCase[]
+}
+
+model TestCase {
+  id                  String               @id @default(auto()) @map("_id") @db.ObjectId
+  userMessage         String
+  expectedOutput      String
+  graderType          String
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  experimentTestCases ExperimentTestCase[]
+  results             Result[]
+}
+
+model ExperimentTestCase {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  experimentId String     @db.ObjectId
+  testCaseId   String     @db.ObjectId
+  createdAt    DateTime   @default(now())
+  experiment   Experiment @relation(fields: [experimentId], references: [id])
+  testCase     TestCase   @relation(fields: [testCaseId], references: [id])
+}
+
+model ExperimentRun {
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
+  experimentId   String      @db.ObjectId
+  runName        String?
+  startedAt      DateTime    @default(now())
+  completedAt    DateTime?
+  aggregateScore Float?
+  createdAt      DateTime    @default(now())
+  experiment     Experiment  @relation(fields: [experimentId], references: [id])
+  results        Result[]
+}
+
+model Result {
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  experimentRunId String        @db.ObjectId
+  testCaseId      String        @db.ObjectId
+  llmResponse     String
+  score           Float?
+  graderDetails   String?
+  createdAt       DateTime      @default(now())
+  experimentRun   ExperimentRun @relation(fields: [experimentRunId], references: [id])
+  testCase        TestCase      @relation(fields: [testCaseId], references: [id])
+}

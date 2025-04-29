@@ -1,0 +1,34 @@
+{
+  "name": "llm-evaluation-platform",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+  "start": "node src/index.js",
+  "dev": "nodemon src/index.js"
+},
+"engines": {
+  "node": "22.x"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "@prisma/client": "^6.6.0",
+    "axios": "^1.9.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "groq-sdk": "^0.9.1",
+    "http-proxy-middleware": "^3.0.5",
+    "mongodb": "^6.16.0",
+    "openai": "^4.77.0",
+    "react-markdown": "^10.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.16",
+    "prisma": "^6.1.0"
+  }
+}
