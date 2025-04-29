@@ -24,12 +24,16 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/llm/aggregateScores',
-        destination: 'http://localhost:5000/llm/aggregateScores',
+        source: '/experiment/runOnePrompt',
+        destination: 'https://llm-evaluation-platform-main.onrender.com/experiment/runOnePrompt',
       },
       {
-        source: '/experiment/runOnePrompt',
-        destination: 'http://localhost:5000/experiment/runOnePrompt',
+        source: '/llm/aggregateScores',
+        destination: 'https://llm-evaluation-platform-main.onrender.com/llm/aggregateScores',
+      },
+      {
+        source: '/health',
+        destination: 'https://llm-evaluation-platform-main.onrender.com/health',
       },
     ];
   },
